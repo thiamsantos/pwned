@@ -29,4 +29,3 @@ install:
 script:
   - mix test
   - MIX_ENV=test mix dialyzer --halt-exit-status
-  - MIX_ENV=test mix coveralls.travis

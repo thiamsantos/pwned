@@ -1,9 +1,8 @@
 # Pwned
 
+[![Travis](https://img.shields.io/travis/thiamsantos/pwned.svg)](https://travis-ci.org/thiamsantos/pwned)
 [![Hex.pm](https://img.shields.io/hexpm/v/pwned.svg)](https://hex.pm/packages/pwned)
 [![Docs](https://img.shields.io/badge/hex-docs-green.svg)](https://hexdocs.pm/pwned)
-[![Travis](https://img.shields.io/travis/thiamsantos/pwned.svg)](https://travis-ci.org/thiamsantos/pwned)
-[![Coveralls](https://img.shields.io/coveralls/thiamsantos/pwned.svg)](https://coveralls.io/github/thiamsantos/pwned?branch=master)
 
 > Check if your password has been pwned
 

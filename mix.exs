@@ -30,8 +30,7 @@ defmodule Pwned.MixProject do
     [
       {:httpoison, "~> 1.0"},
       {:ex_doc, ">= 0.0.0", only: :dev},
-      {:dialyxir, "~> 0.5", only: [:dev, :test], runtime: false},
-      {:excoveralls, "~> 0.8", only: :test}
+      {:dialyxir, "~> 0.5", only: [:dev, :test], runtime: false}
     ]
   end
 
