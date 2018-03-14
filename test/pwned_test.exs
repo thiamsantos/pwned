@@ -1,8 +1,4 @@
 defmodule PwnedTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
   doctest Pwned
-
-  test "greets the world" do
-    assert Pwned.hello() == :world
-  end
 end

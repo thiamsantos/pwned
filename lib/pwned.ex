@@ -2,26 +2,27 @@ defmodule Pwned do
   @moduledoc """
   Check if your password has been pwned.
   """
+  @range_client Application.get_env(:pwned, :range_client)
 
   @doc """
   It uses have i been pwned? to verify if a password has appeared in a data breach. In order to protect the value of the source password being searched the value is not sended through the network.
 
   ## Examples
 
-      iex> Pwned.pwned?("password")
-      {:ok, 3303003}
+      iex> Pwned.check_password("P@ssw0rd")
+      {:ok, 47205}
 
-      iex> Pwned.pwned?("Z76okiy2X1m5PFud8iPUQGqusShCJhg+xiKeS91iOZw=")
-      :error
+      iex> Pwned.check_password("Z76okiy2X1m5PFud8iPUQGqusShCJhg")
+      {:ok, false}
 
   """
-  def pwned?(password) do
+  @spec check_password(String.t()) :: {:ok, integer} | {:ok, false} | :error
+  def check_password(password) do
     with {head, rest} <- hash(password),
-         {:ok, response} <- get_range(head),
+         {:ok, response} <- @range_client.get(head),
          {:ok, range} <- parse_response(response),
-         {:ok, count} <- find_hash(range, rest),
-         {:ok, parsed_count} <- parse_count(count) do
-      {:ok, parsed_count}
+         {:ok, answer} <- do_check(range, rest) do
+      {:ok, answer}
     else
       :error -> :error
     end
@@ -33,16 +34,6 @@ defmodule Pwned do
     |> String.split_at(5)
   end
 
-  defp get_range(head) do
-    case HTTPoison.get("https://api.pwnedpasswords.com/range/#{head}") do
-      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        {:ok, body}
-
-      _ ->
-        :error
-    end
-  end
-
   defp parse_response(response) do
     parsed_response =
       response
@@ -52,13 +43,21 @@ defmodule Pwned do
     {:ok, parsed_response}
   end
 
+  defp do_check(range, rest) do
+    case find_hash(range, rest) do
+      {:ok, false} -> {:ok, false}
+      {:ok, count} -> parse_count(count)
+      :error -> :error
+    end
+  end
+
   defp find_hash(range, hash) do
     range
     |> Enum.find(fn item -> List.first(item) == hash end)
     |> handle_hash()
   end
 
-  defp handle_hash(nil), do: :error
+  defp handle_hash(nil), do: {:ok, false}
   defp handle_hash([_hash, count]), do: {:ok, count}
 
   defp parse_count(count) do
