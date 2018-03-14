@@ -14,6 +14,7 @@ defmodule Pwned.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
+      applications: [:httpoison],
       extra_applications: [:logger]
     ]
   end
@@ -21,7 +22,6 @@ defmodule Pwned.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:jason, "~> 1.0"},
       {:httpoison, "~> 1.0"}
     ]
   end
