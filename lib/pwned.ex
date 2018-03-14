@@ -5,7 +5,7 @@ defmodule Pwned do
   @range_client Application.get_env(:pwned, :range_client)
 
   @doc """
-  It uses have i been pwned? to verify if a password has appeared in a data breach. In order to protect the value of the source password being searched the value is not sended through the network.
+  It uses [have i been pwned?](https://haveibeenpwned.com) to verify if a password has appeared in a data breach. In order to protect the value of the source password being searched the value is not sended through the network.
 
   ## Examples
 
@@ -47,7 +47,6 @@ defmodule Pwned do
     case find_hash(range, rest) do
       {:ok, false} -> {:ok, false}
       {:ok, count} -> parse_count(count)
-      :error -> :error
     end
   end
 
@@ -65,6 +64,6 @@ defmodule Pwned do
     |> handle_count()
   end
 
-  defp handle_count(nil), do: :error
+  defp handle_count(:error), do: :error
   defp handle_count({count, _rest}), do: {:ok, count}
 end

@@ -1,4 +1,5 @@
 defmodule Pwned.Range.HTTPClient do
+  @moduledoc false
   @behaviour Pwned.Range
 
   def get(head) do
