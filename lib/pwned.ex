@@ -37,14 +37,17 @@ defmodule Pwned do
     case HTTPoison.get("https://api.pwnedpasswords.com/range/#{head}") do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         {:ok, body}
-      _ -> :error
+
+      _ ->
+        :error
     end
   end
 
   defp parse_response(response) do
-    parsed_response = response
-    |> String.split("\r\n")
-    |> Enum.map(fn line -> String.split(line, ":") end)
+    parsed_response =
+      response
+      |> String.split("\r\n")
+      |> Enum.map(fn line -> String.split(line, ":") end)
 
     {:ok, parsed_response}
   end
