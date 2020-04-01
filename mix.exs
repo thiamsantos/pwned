@@ -1,13 +1,13 @@
 defmodule Pwned.MixProject do
   use Mix.Project
 
-  @version "1.0.3"
+  @version "1.1.0"
 
   def project do
     [
       app: :pwned,
       version: @version,
-      elixir: "~> 1.4",
+      elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       description: description(),
@@ -29,7 +29,7 @@ defmodule Pwned.MixProject do
   defp deps do
     [
       {:httpoison, "~> 1.0"},
-      {:ex_doc, ">= 0.0.0", only: :dev},
+      {:ex_doc, "~> 0.21", only: :dev, runtime: false},
       {:dialyxir, "~> 0.5", only: [:dev, :test], runtime: false}
     ]
   end

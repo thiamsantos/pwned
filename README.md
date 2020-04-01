@@ -22,7 +22,7 @@ The package can be installed by adding `pwned` to your list of dependencies in `
 ```elixir
 def deps do
   [
-    {:pwned, "~> 1.0"}
+    {:pwned, "~> 1.1"}
   ]
 end
 ```
@@ -31,13 +31,13 @@ end
 
 ```elixir
 case Pwned.check_password("somepassword") do
-  {:ok, false} -> 
+  {:ok, false} ->
     IO.puts("Good news — no pwnage found! This password wasn't found in any of the Pwned Passwords loaded into Have I been pwned.")
 
-  {:ok, count} -> 
+  {:ok, count} ->
     IO.puts("Ohh, sorry! This password has appeared #{count} time on data breaches.")
 
-  :error -> 
+  :error ->
     IO.puts("Something went wrong.")
 end
 ```
